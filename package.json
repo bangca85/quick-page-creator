@@ -1,0 +1,21 @@
+{
+  "name": "quick-page-creator",
+  "version": "1.0.0",
+  "main": "index.js",
+"scripts": {
+  "build": "tsc -noEmit -skipLibCheck && node --no-warnings esbuild.config.mjs production && cp manifest.json ../plugins/quick-page-creator/ "
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.24.0",
+    "fs": "^0.0.1-security",
+    "obsidian": "^1.7.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

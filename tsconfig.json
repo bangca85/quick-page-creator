@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "../plugins/quick-page-creator", // Output directory for JS files
+    "rootDir": "./", // Root directory of your TypeScript files
+    "target": "es6", // ECMAScript target version
+    "module": "commonjs", // Module system
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "**/*.ts" // Include all TypeScript files in the project
+  ],
+  "exclude": [
+    "node_modules",
+    "plugins"
+  ]
+}
