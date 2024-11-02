@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import { App, PluginSettingTab, Setting, TFolder } from "obsidian";
 import QuickPageCreator from "../main";
 
 export interface QuickPageCreatorSettings {
@@ -6,7 +6,7 @@ export interface QuickPageCreatorSettings {
 }
 
 export const DEFAULT_SETTINGS: QuickPageCreatorSettings = {
-  templateFolderPath: "",
+  templateFolderPath: "/",
 };
 
 export class QuickPageCreatorSettingTab extends PluginSettingTab {
@@ -24,14 +24,26 @@ export class QuickPageCreatorSettingTab extends PluginSettingTab {
     containerEl.createEl('h2', { text: 'Quick Page Creator Settings' });
 
     new Setting(containerEl)
-      .setName('Template Folder Path')
-      .setDesc('Path to the folder containing templates.')
-      .addText(text => text
-        .setPlaceholder('Example: Templates')
-        .setValue(this.plugin.settings.templateFolderPath)
-        .onChange(async (value) => {
+      .setName('Template Folder')
+      .setDesc('Select a folder to use for templates (default: /)')
+      .addDropdown(dropdown => {
+        dropdown.addOption("/", "/"); // Root option
+
+        // Populate dropdown with all folders in the vault
+        this.app.vault.getAllLoadedFiles().forEach(file => {
+          if (file instanceof TFolder) {
+            dropdown.addOption(file.path, file.path);
+          }
+        });
+
+        // Set the current value
+        dropdown.setValue(this.plugin.settings.templateFolderPath || "/");
+
+        // Update setting when changed
+        dropdown.onChange(async (value) => {
           this.plugin.settings.templateFolderPath = value;
           await this.plugin.saveSettings();
-        }));
+        });
+      });
   }
 }

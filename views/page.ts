@@ -15,6 +15,17 @@ export class PageCreationModal extends Modal {
     let selectedFolder: TFolder | null = null;
     let selectedTemplate: TFile | null = null;
     let useBlankPage = true; // Flag to indicate whether to use a blank page
+    let fileName = "NewPage"; // Default file name
+
+    // File Name Textbox
+    new Setting(contentEl)
+      .setName("File Name")
+      .addText(text => {
+        text.setPlaceholder("Enter file name (default: NewPage)")
+          .onChange(value => {
+            fileName = value.trim() || "NewPage"; // Default to "NewPage" if input is empty
+          });
+      });
 
     // Folder Selection Dropdown
     new Setting(contentEl)
@@ -65,7 +76,7 @@ export class PageCreationModal extends Modal {
       .addButton(button => {
         button.setButtonText("Create Page").onClick(async () => {
           if (selectedFolder) {
-            await this.createPage(selectedFolder, selectedTemplate, useBlankPage);
+            await this.createPage(selectedFolder, selectedTemplate, useBlankPage, fileName);
             this.close();
           } else {
             new Notice("Please select a folder.");
@@ -74,12 +85,11 @@ export class PageCreationModal extends Modal {
       });
   }
 
-  async createPage(folder: TFolder, template: TFile | null, useBlankPage: boolean) {
-    // Check if we should use a blank page or a template
+  async createPage(folder: TFolder, template: TFile | null, useBlankPage: boolean, fileName: string) {
     const content = useBlankPage || !template ? "" : await this.app.vault.read(template);
-    const newPagePath = `${folder.path}/NewPage.md`;
+    const newPagePath = `${folder.path}/${fileName}.md`;
     await this.app.vault.create(newPagePath, content);
-    new Notice(`Page created in ${folder.path}`);
+    new Notice(`Page created: ${newPagePath}`);
   }
 
   onClose() {
