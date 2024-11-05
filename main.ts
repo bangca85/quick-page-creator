@@ -1,5 +1,5 @@
 import { Plugin, Notice } from 'obsidian';
-import { PageCreationModal } from './views/page'; // Import PageCreationModal from './views/page'; 
+import { PageCreationModal } from './views/page'; //
 import { QuickPageCreatorSettingTab, QuickPageCreatorSettings, DEFAULT_SETTINGS } from './views/settings';
 
 export default class QuickPageCreator extends Plugin {
@@ -23,8 +23,6 @@ export default class QuickPageCreator extends Plugin {
       },
     });
   }
-
-
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());

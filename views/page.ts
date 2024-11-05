@@ -69,10 +69,10 @@ export class PageCreationModal extends Modal {
         dropdown.onChange((value) => {
           if (value === "blank") {
             selectedTemplate = null;
-            useBlankPage = true; // Set flag to use blank page content
+            useBlankPage = true; 
           } else {
             selectedTemplate = this.app.vault.getAbstractFileByPath(value) as TFile;
-            useBlankPage = false; // Set flag to use template content
+            useBlankPage = false;
           }
         });
         dropdown.selectEl.classList.add("quick-page-dropdown");
