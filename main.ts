@@ -13,7 +13,7 @@ export default class QuickPageCreator extends Plugin {
 
     this.addCommand({
       id: 'create-page',
-      name: '/page - Create Page with Template',
+      name: 'Create Page with Template',
       checkCallback: (checking: boolean) => {
         if (!checking) {
           const modal = new PageCreationModal(this.app, this.settings.templateFolderPath);
@@ -23,6 +23,8 @@ export default class QuickPageCreator extends Plugin {
       },
     });
   }
+
+
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
